@@ -1,7 +1,9 @@
 package com.eventos.controller;
 
 import com.eventos.entity.Evento;
+import com.eventos.entity.EventoXAsistente;
 import com.eventos.service.EventoService;
+import com.eventos.service.EventoXAsistenteService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ public class EventoController {
 
     @Autowired
     private EventoService eventoService;
+
+    @Autowired
+    private EventoXAsistenteService eventoXasistenteService;
 
     @Operation(summary = "Consulta de todos los eventos")
     @GetMapping("/eventos")
@@ -51,7 +56,16 @@ public class EventoController {
     @Operation(summary = "Eliminación de 1 evento")
     @DeleteMapping("/eventos/{eventoId}")
     public void deleteEvento(@PathVariable("eventoId") Long eventoId){
-        eventoService.delete(eventoId);
+
+        List<EventoXAsistente> eventosXasistentes;
+
+        eventosXasistentes = eventoXasistenteService.getEventoXAsistente_idEvento(eventoId);
+
+        if(eventosXasistentes.size()==0)
+            System.out.println("Se puede borrar");
+        else    System.out.println("No Se puede borrar");
+
+        //eventoService.delete(eventoId);
     }
 
     public void geocode(){
