@@ -18,7 +18,7 @@ public class EventoController {
 
     @Operation(summary = "Consulta de todos los eventos")
     @GetMapping("/eventos")
-    public List<Evento> getAll(){
+    public List<Evento> getAllEventos(){
 
         List<Evento> eventos;
 
@@ -37,20 +37,20 @@ public class EventoController {
     }
 
     @Operation(summary = "Consulta de 1 eventos")
-    @GetMapping("/{eventoId}")
-    public Optional<Evento> getById(@PathVariable("eventoId") Long eventoId){
+    @GetMapping("/eventos/{eventoId}")
+    public Optional<Evento> getByIdEvento(@PathVariable("eventoId") Long eventoId){
         return eventoService.getEvento(eventoId);
     }
 
     @Operation(summary = "Creación y/o actualización de 1 evento")
-    @PostMapping
-    public void SaveUpdate(@RequestBody Evento evento){
+    @PostMapping("/eventos")
+    public void SaveUpdateEvento(@RequestBody Evento evento){
         eventoService.saveOrUpdate(evento);
     }
 
     @Operation(summary = "Eliminación de 1 evento")
-    @DeleteMapping("/{eventoId}")
-    public void delete(@PathVariable("eventoId") Long eventoId){
+    @DeleteMapping("/eventos/{eventoId}")
+    public void deleteEvento(@PathVariable("eventoId") Long eventoId){
         eventoService.delete(eventoId);
     }
 
