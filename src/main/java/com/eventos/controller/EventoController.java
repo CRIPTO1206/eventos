@@ -5,6 +5,8 @@ import com.eventos.entity.EventoXAsistente;
 import com.eventos.service.EventoService;
 import com.eventos.service.EventoXAsistenteService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping
 public class EventoController {
+
+    Logger logger = LoggerFactory.getLogger(AsistenteController.class);
 
     @Autowired
     private EventoService eventoService;
@@ -62,10 +66,8 @@ public class EventoController {
         eventosXasistentes = eventoXasistenteService.getEventoXAsistente_idEvento(eventoId);
 
         if(eventosXasistentes.size()==0)
-            System.out.println("Se puede borrar");
-        else    System.out.println("No Se puede borrar");
-
-        //eventoService.delete(eventoId);
+            eventoService.delete(eventoId);
+        else    logger.warn("*********************************** NO se puede borrar el evento por que ya está asignados asistentes");
     }
 
     public void geocode(){

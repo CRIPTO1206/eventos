@@ -5,15 +5,20 @@ import com.eventos.entity.EventoXAsistente;
 import com.eventos.service.AsistenteService;
 import com.eventos.service.EventoXAsistenteService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping
 public class AsistenteController {
+
+    Logger logger = LoggerFactory.getLogger(AsistenteController.class);
 
     @Autowired
     private AsistenteService asistenteService;
@@ -62,10 +67,10 @@ public class AsistenteController {
         eventosXasistentes = eventoXasistenteService.getEventoXAsistente_idAsistente(eventoId);
 
         if(eventosXasistentes.size()==0)
-            System.out.println("Se puede borrar");
-        else    System.out.println("No Se puede borrar");
+            asistenteService.delete(eventoId);
+        else    logger.warn("*********************************** NO se puede borrar el asistente por que ya está asignado a un evento");
 
-        //asistenteService.delete(eventoId);
+
     }
 
     public void geocode(){
