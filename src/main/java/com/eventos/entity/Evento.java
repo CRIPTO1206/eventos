@@ -1,14 +1,13 @@
 package com.eventos.entity;
 
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "evento")
-public class Student {
+public class Evento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
