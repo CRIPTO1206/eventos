@@ -30,37 +30,61 @@ public class AsistenteController {
     @GetMapping("/asistentes")
     public List<Asistente> getAllAsistentes(){
 
-        List<Asistente> asistente;
+        List<Asistente> asistentes;
 
         long startTime = System.nanoTime();
 
-        asistente = asistenteService.getAsistentes();
+        asistentes = asistenteService.getAsistentes();
 
         long endTime = System.nanoTime();
 
         long timeElapsed = endTime - startTime;
 
-        System.out.println("Tiempo de ejecución en milisegundos: " + timeElapsed / 1000000);
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la consulta de asistentes: " + timeElapsed / 1000000);
 
-        return asistente;
+        return asistentes;
 
     }
 
     @Operation(summary = "Consulta de 1 asistente")
     @GetMapping("/asistentes/{asistenteId}")
     public Optional<Asistente> getByIdAsistente(@PathVariable("asistenteId") Long asistenteId){
-        return asistenteService.getAsistente(asistenteId);
+
+        Optional<Asistente> asistente;
+
+        long startTime = System.nanoTime();
+
+        asistente = asistenteService.getAsistente(asistenteId);
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la consulta de un asistente: " + timeElapsed / 1000000);
+
+        return asistente;
     }
 
     @Operation(summary = "Creación y/o actualización de 1 asistente")
     @PostMapping("/asistentes")
     public void SaveUpdateAsistente(@RequestBody Asistente asistente){
+
+        long startTime = System.nanoTime();
+
         asistenteService.saveOrUpdate(asistente);
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la creación/actualización de un asistente: " + timeElapsed / 1000000);
     }
 
     @Operation(summary = "Eliminación de 1 asistente")
     @DeleteMapping("/asistentes/{asistenteId}")
     public void deleteAsistente(@PathVariable("asistenteId") Long eventoId){
+
+        long startTime = System.nanoTime();
 
         List<EventoXAsistente> eventosXasistentes;
 
@@ -70,10 +94,11 @@ public class AsistenteController {
             asistenteService.delete(eventoId);
         else    logger.warn("*********************************** NO se puede borrar el asistente por que ya está asignado a un evento");
 
+        long endTime = System.nanoTime();
 
-    }
+        long timeElapsed = endTime - startTime;
 
-    public void geocode(){
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la eliminación de un asistente: " + timeElapsed / 1000000);
 
     }
 

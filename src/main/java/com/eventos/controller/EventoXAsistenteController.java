@@ -3,6 +3,8 @@ package com.eventos.controller;
 import com.eventos.entity.EventoXAsistente;
 import com.eventos.service.EventoXAsistenteService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping
 public class EventoXAsistenteController {
+
+    Logger logger = LoggerFactory.getLogger(AsistenteController.class);
 
     @Autowired
     private EventoXAsistenteService eventoXasistenteService;
@@ -30,7 +34,7 @@ public class EventoXAsistenteController {
 
         long timeElapsed = endTime - startTime;
 
-        System.out.println("Tiempo de ejecución en milisegundos: " + timeElapsed / 1000000);
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la consulta de eventos X asistentes: " + timeElapsed / 1000000);
 
         return eventosXasistentes;
 
@@ -39,13 +43,33 @@ public class EventoXAsistenteController {
     @Operation(summary = "Consulta de 1 evento por asistentes")
     @GetMapping("/eventosXasistentes/{eventoXasistenteId}")
     public Optional<EventoXAsistente> getByIdEvento(@PathVariable("eventoXasistenteId") Long eventoXasistenteId){
-        return eventoXasistenteService.getEventoXAsistente(eventoXasistenteId);
+
+        long startTime = System.nanoTime();
+
+        Optional<EventoXAsistente> exa = eventoXasistenteService.getEventoXAsistente(eventoXasistenteId);
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la consulta de un evento X asistentes: " + timeElapsed / 1000000);
+
+        return exa;
     }
 
     @Operation(summary = "Creación y/o actualización de 1 evento por asistentes")
     @PostMapping("/eventosXasistentes")
     public void SaveUpdateEventoXAsistente(@RequestBody EventoXAsistente eventoXasistente){
+
+        long startTime = System.nanoTime();
+
         eventoXasistenteService.saveOrUpdate(eventoXasistente);
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la creación/actualización de un evento X asistentes: " + timeElapsed / 1000000);
     }
 
 }

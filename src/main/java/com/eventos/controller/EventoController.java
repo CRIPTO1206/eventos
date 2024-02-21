@@ -39,27 +39,54 @@ public class EventoController {
 
         long timeElapsed = endTime - startTime;
 
-        System.out.println("Tiempo de ejecución en milisegundos: " + timeElapsed / 1000000);
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la consulta de eventos: " + timeElapsed / 1000000);
 
         return eventos;
 
     }
 
-    @Operation(summary = "Consulta de 1 eventos")
+    @Operation(summary = "Consulta de 1 evento")
     @GetMapping("/eventos/{eventoId}")
     public Optional<Evento> getByIdEvento(@PathVariable("eventoId") Long eventoId){
-        return eventoService.getEvento(eventoId);
+
+        Optional<Evento> evento;
+
+        long startTime = System.nanoTime();
+
+        evento = eventoService.getEvento(eventoId);
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la consulta de un evento: " + timeElapsed / 1000000);
+
+        return evento;
+
     }
 
     @Operation(summary = "Creación y/o actualización de 1 evento")
     @PostMapping("/eventos")
     public void SaveUpdateEvento(@RequestBody Evento evento){
+
+        long startTime = System.nanoTime();
+
         eventoService.saveOrUpdate(evento);
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la creación/actualización de un evento: " + timeElapsed / 1000000);
+
+
     }
 
     @Operation(summary = "Eliminación de 1 evento")
     @DeleteMapping("/eventos/{eventoId}")
     public void deleteEvento(@PathVariable("eventoId") Long eventoId){
+
+        long startTime = System.nanoTime();
 
         List<EventoXAsistente> eventosXasistentes;
 
@@ -68,10 +95,12 @@ public class EventoController {
         if(eventosXasistentes.size()==0)
             eventoService.delete(eventoId);
         else    logger.warn("*********************************** NO se puede borrar el evento por que ya está asignados asistentes");
+
+        long endTime = System.nanoTime();
+
+        long timeElapsed = endTime - startTime;
+
+        logger.info("---------------------------------------------- Tiempo de ejecución en milisegundos de la eliminación de un evento: " + timeElapsed / 1000000);
+
     }
-
-    public void geocode(){
-
-    }
-
 }
