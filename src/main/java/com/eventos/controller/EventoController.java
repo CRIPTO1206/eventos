@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequestMapping
 public class EventoController {
 
-    Logger logger = LoggerFactory.getLogger(AsistenteController.class);
+    Logger logger = LoggerFactory.getLogger(EventoController.class);
 
     @Autowired
     private EventoService eventoService;
