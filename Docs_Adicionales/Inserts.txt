@@ -1,0 +1,15 @@
+INSERT INTO public.asistente(
+	id, apellido, nombre)
+	VALUES (?, ?, ?);
+	
+	
+	
+INSERT INTO public.evento(
+	id, descripcion, nombre)
+	VALUES (?, ?, ?);
+	
+	
+	
+INSERT INTO public.evento_xasistente(
+	id, descripcion, fecha, hora, id_asistente, id_evento)
+	VALUES (?, ?, ?, ?, ?, ?);

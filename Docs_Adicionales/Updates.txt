@@ -1,0 +1,15 @@
+UPDATE public.asistente
+	SET id=?, apellido=?, nombre=?
+	WHERE <condition>;
+
+
+
+UPDATE public.evento
+	SET id=?, descripcion=?, nombre=?
+	WHERE <condition>;
+
+
+
+UPDATE public.evento_xasistente
+	SET id=?, descripcion=?, fecha=?, hora=?, id_asistente=?, id_evento=?
+	WHERE <condition>;
