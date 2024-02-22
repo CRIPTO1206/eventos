@@ -1,0 +1,12 @@
+SELECT id, apellido, nombre
+	FROM public.asistente;
+	
+	
+	
+SELECT id, descripcion, nombre
+	FROM public.evento;
+	
+	
+	
+SELECT id, descripcion, fecha, hora, id_asistente, id_evento
+	FROM public.evento_xasistente;
